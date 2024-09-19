@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Générateur de QR Code pour Cryptomonnaies</title>
+    <link rel="stylesheet" href="test.css" />
+    <link rel="shortcut icon" href="image.png" type="image/x-icon" />
+  </head>
+  <body>
+    <header>
+      <h1>Générateur de QR Code pour Cryptomonnaies</h1>
+    </header>
+    <main>
+      <div class="input-group">
+        <label for="crypto">Cryptomonnaies :</label>
+        <select id="crypto" onchange="toggleNetworkOption()">
+          <option value="bitcoin">Bitcoin</option>
+          <option value="ethereum">Ethereum</option>
+          <option value="litecoin">Litecoin</option>
+          <option value="tether-usd">Tether USD</option>
+          <option value="ripple">Ripple</option>
+          <option value="tron">Tron</option>
+          <option value="bitcoin-cash">Bitcoin Cash</option>
+          <option value="cardano">Cardano</option>
+          <option value="dogecoin">Dogecoin</option>
+          <option value="polkadot">Polkadot</option>
+          <option value="stellar">Stellar</option>
+          <option value="solana">Solana</option>
+        </select>
+      </div>
+
+      <div class="input-group" id="network-group" style="display: none;">
+        <label for="network">Réseau :</label>
+        <select id="network">
+          <option value="tether-usd-eth">Ethereum (ERC20)</option>
+          <option value="tether-usd-tron">Tron (TRC20)</option>
+          <option value="tether-usd-bsc">Binance Smart Chain (BEP20)</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="address">Adresse :</label>
+        <input type="text" id="address" required />
+      </div>
+      <div class="input-group">
+        <label for="amount">Montant :</label>
+        <input type="text" id="amount" required />
+      </div>
+      <button class="generate-btn" onclick="generateQRCode()">
+        Générer le QR Code
+      </button>
+
+      <div id="qrcode-container" style="display: none">
+        <p id="crypto-receive">Receive <span></span></p>
+        <div class="crypto-info">
+          <img id="crypto-logo" class="logo" src="" alt="Logo" />
+        </div>
+        <div id="qrcode"></div>
+        <p id="crypto-name">Your <span id="crypto-symbol"></span> Address</p>
+        <p id="crypto-address" class="address"></p>
+        <p id="payment-link">Payment link</p>
+        <br><br><br><br>
+        <div class="button-group">
+          <button id="copy-btn" class="copy-btn" onclick="copyAddress()">
+            COPY
+          </button>
+          <button id="share-btn" class="share-btn">SHARE</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="test.js"></script>
+  </body>
+</html>
