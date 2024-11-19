@@ -10,9 +10,10 @@ const cryptoLogos = {
     polkadot: "img/polkadot.png",
     stellar: "img/stellar.png",
     solana: "img/solana.png",
-    "tether-usd-eth": "img/usdt_eth.png", // USDT sur Ethereum (ERC20)
-    "tether-usd-tron": "img/usdt_tron.png", // USDT sur Tron (TRC20)
-    "tether-usd-bsc": "img/usdt_bsc.png" // USDT sur Binance Smart Chain (BEP20)
+    "tether-usd-eth": "img/usdt_eth.png",
+    "tether-usd-tron": "img/usdt_tron.png",
+    "tether-usd-bsc": "img/usdt_bsc.png",
+    "tether-usd-matic": "img/usdt_matic.png" // USDT sur Polygon (MATIC)
 };
 
 function toggleNetworkOption() {
@@ -37,54 +38,36 @@ function generateQRCode() {
     let cryptoName = "";
     let logoSrc = "";
 
-    // Pour USDT, utiliser le protocole spécifique en fonction du réseau sélectionné
     if (crypto === "tether-usd") {
-        if (network === "tether-usd-eth") {
-            selectedCrypto = "ethereum";  // Remplacer par "ethereum" pour ERC20
-            cryptoSymbol = "USDT";
-            cryptoName = "Tether USD";
-            logoSrc = cryptoLogos["tether-usd-eth"];
-        } else if (network === "tether-usd-tron") {
-            selectedCrypto = "tron";  // Remplacer par "tron" pour TRC20
-            cryptoSymbol = "USDT";
-            cryptoName = "Tether USD";
-            logoSrc = cryptoLogos["tether-usd-tron"];
-        } else if (network === "tether-usd-bsc") {
-            selectedCrypto = "bsc";  // Remplacer par "bsc" pour BEP20
-            cryptoSymbol = "USDT";
-            cryptoName = "Tether USD";
-            logoSrc = cryptoLogos["tether-usd-bsc"];
+        switch (network) {
+            case "tether-usd-eth":
+                selectedCrypto = "ethereum";
+                cryptoSymbol = "USDT";
+                cryptoName = "Tether USD (ERC20)";
+                logoSrc = cryptoLogos["tether-usd-eth"];
+                break;
+            case "tether-usd-tron":
+                selectedCrypto = "tron";
+                cryptoSymbol = "USDT";
+                cryptoName = "Tether USD (TRC20)";
+                logoSrc = cryptoLogos["tether-usd-tron"];
+                break;
+            case "tether-usd-bsc":
+                selectedCrypto = "bsc";
+                cryptoSymbol = "USDT";
+                cryptoName = "Tether USD (BEP20)";
+                logoSrc = cryptoLogos["tether-usd-bsc"];
+                break;
+            case "tether-usd-matic":
+                selectedCrypto = "matic";
+                cryptoSymbol = "USDT";
+                cryptoName = "Tether USD (MATIC)";
+                logoSrc = cryptoLogos["tether-usd-matic"];
+                break;
         }
     } else {
-        // Définir les valeurs pour les autres cryptos
-        cryptoSymbol = {
-            bitcoin: "BTC",
-            ethereum: "ETH",
-            litecoin: "LTC",
-            ripple: "XRP",
-            tron: "TRX",
-            "bitcoin-cash": "BCH",
-            cardano: "ADA",
-            dogecoin: "DOGE",
-            polkadot: "DOT",
-            stellar: "XLM",
-            solana: "SOL"
-        }[crypto];
-        
-        cryptoName = {
-            bitcoin: "Bitcoin",
-            ethereum: "Ethereum",
-            litecoin: "Litecoin",
-            ripple: "Ripple",
-            tron: "Tron",
-            "bitcoin-cash": "Bitcoin Cash",
-            cardano: "Cardano",
-            dogecoin: "Dogecoin",
-            polkadot: "Polkadot",
-            stellar: "Stellar",
-            solana: "Solana"
-        }[crypto];
-
+        cryptoSymbol = /* valeurs existantes */;
+        cryptoName = /* valeurs existantes */;
         logoSrc = cryptoLogos[crypto];
     }
 
@@ -92,41 +75,9 @@ function generateQRCode() {
     const qrCodeContainer = document.getElementById("qrcode");
     qrCodeContainer.innerHTML = "";
 
-    QRCode.toCanvas(
-        document.createElement("canvas"),
-        uri,
-        { width: 256, height: 256 },
-        function (error, canvas) {
-            if (error) console.error(error);
-            qrCodeContainer.appendChild(canvas);
-            document.getElementById("qrcode-container").style.display = "block";
-            document.getElementById("crypto-logo").src = logoSrc;
-            document.getElementById("crypto-symbol").innerText = cryptoSymbol;
-            document.getElementById("crypto-address").innerText = address;
-            document.querySelector("p span").innerText = cryptoSymbol;
-
-            document.getElementById("crypto-receive").innerText = `Receive ${cryptoName} (${cryptoSymbol})`;
-        }
-    );
-}
-
-function copyAddress() {
-    const address = document.getElementById("address").value;
-    navigator.clipboard
-        .writeText(address)
-        .then(() => {
-            alert("Adresse copiée dans le presse-papiers !");
-        })
-        .catch((err) => {
-            console.error("Échec de la copie : ", err);
-        });
-}
-
-function downloadQRCode() {
-    const qrCodeCanvas = document.querySelector("#qrcode canvas");
-    const qrCodeDataUrl = qrCodeCanvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = qrCodeDataUrl;
-    link.download = "qrcode.png";
-    link.click();
+    QRCode.toCanvas(uri, { width: 256 }, (err, canvas) => {
+        if (!err) qrCodeContainer.appendChild(canvas);
+        document.getElementById("qrcode-container").style.display = "block";
+        document.getElementById("crypto-logo").src = logoSrc;
+    });
 }
