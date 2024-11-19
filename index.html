@@ -19,6 +19,7 @@
           <option value="ethereum">Ethereum</option>
           <option value="litecoin">Litecoin</option>
           <option value="tether-usd">Tether USD</option>
+          <option value="usdt-matic">USDT (Polygon)</option>
           <option value="ripple">Ripple</option>
           <option value="tron">Tron</option>
           <option value="bitcoin-cash">Bitcoin Cash</option>
@@ -36,7 +37,6 @@
           <option value="tether-usd-eth">Ethereum (ERC20)</option>
           <option value="tether-usd-tron">Tron (TRC20)</option>
           <option value="tether-usd-bsc">Binance Smart Chain (BEP20)</option>
-          <option value="tether-usd-matic">Polygon (MATIC)</option>
         </select>
       </div>
 
@@ -60,10 +60,10 @@
         <div id="qrcode"></div>
         <p id="crypto-name">Your <span id="crypto-symbol"></span> Address</p>
         <p id="crypto-address" class="address"></p>
-        <p id="payment-link">Payment link</p>
         <div class="button-group">
-          <button id="copy-btn" class="copy-btn" onclick="copyAddress()">COPY</button>
-          <button id="share-btn" class="share-btn">SHARE</button>
+          <button id="copy-btn" class="copy-btn" onclick="copyAddress()">
+            COPY
+          </button>
         </div>
       </div>
     </main>
